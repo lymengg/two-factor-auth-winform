@@ -72,14 +72,19 @@ namespace SaleSystem
                 return;
             }
 
-            MainLayout mainLayoutFrm = new();
+            MainLayout mainLayoutFrm = new(username);
             mainLayoutFrm.Show();
             this.Hide();
         }
 
         private void btnResend_Click(object sender, EventArgs e)
         {
-
+            var dataAccessObject = new DataAccessObject();
+            bool isSuccess = dataAccessObject.ResendOTP(username);
+            if (isSuccess)
+            {
+                MessageBox.Show("OTP has resent!");
+            }
         }
     }
 }

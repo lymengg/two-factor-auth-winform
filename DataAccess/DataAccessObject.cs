@@ -17,19 +17,20 @@ namespace SaleSystem.DataAccess
             string query = "select * from tblUser where username=@username and password=@password;";
             SqlCommand cmd = new(query, connection);
             cmd.Parameters.AddWithValue("@username", username);
-            cmd.Parameters.AddWithValue ("@password", password);
+            cmd.Parameters.AddWithValue("@password", password);
             SqlDataAdapter adapter = new()
             {
                 SelectCommand = cmd
             };
             DataTable dt = new();
             adapter.Fill(dt);
-            if (dt.Rows.Count > 0 )
+            if (dt.Rows.Count > 0)
             {
                 Random random = new();
                 dt.Rows[0]["otp_code"] = random.Next(0, 1000000).ToString("D6");
-                SqlCommand updateQuery = new("update tblUser set otp_code = @optCode", connection);
+                SqlCommand updateQuery = new("update tblUser set otp_code = @optCode where username = @username;", connection);
                 updateQuery.Parameters.AddWithValue("@optCode", random.Next(0, 1000000).ToString("D6"));
+                updateQuery.Parameters.AddWithValue("@username", username);
                 adapter.UpdateCommand = updateQuery;
                 adapter.Update(dt);
                 return true;
@@ -49,8 +50,53 @@ namespace SaleSystem.DataAccess
             };
             DataTable dt = new();
             adapter.Fill(dt);
-            MessageBox.Show(dt.Rows[0]["otp_code"].ToString());
             if (dt.Rows.Count > 0 && dt.Rows[0]["otp_code"].ToString() == otpCode)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool ResendOTP(string username)
+        {
+            string query = "select * from tblUser where username = @username;";
+            SqlCommand cmd = new(query, connection);
+            cmd.Parameters.AddWithValue("@username", username);
+            SqlDataAdapter adapter = new()
+            {
+                SelectCommand = cmd
+            };
+            DataTable dt = new();
+            adapter.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                Random random = new();
+                dt.Rows[0]["otp_code"] = random.Next(0, 1000000).ToString("D6");
+                SqlCommand updateQuery = new("update tblUser set otp_code = @optCode where username = @username;", connection);
+                updateQuery.Parameters.AddWithValue("@optCode", random.Next(0, 1000000).ToString("D6"));
+                updateQuery.Parameters.AddWithValue("@username", username);
+                adapter.UpdateCommand = updateQuery;
+                adapter.Update(dt);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool VerifyRole(string username, string role)
+        {
+            string query = "select * from tblUser where username = @username;";
+            SqlCommand cmd = new(query, connection);
+            cmd.Parameters.AddWithValue("@username", username);
+            SqlDataAdapter adapter = new()
+            {
+                SelectCommand = cmd
+            };
+            DataTable dt = new();
+            adapter.Fill(dt);
+            string userRole = dt.Rows[0]["role"].ToString();
+            if ((dt.Rows.Count > 0 && userRole == role) || userRole == "admin")
             {
                 return true;
             }

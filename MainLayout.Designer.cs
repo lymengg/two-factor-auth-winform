@@ -39,6 +39,8 @@
             btnSale = new Button();
             panel2 = new Panel();
             btnAdmin = new Button();
+            panel6 = new Panel();
+            btnLogout = new Button();
             panelForm = new Panel();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -46,6 +48,7 @@
             panel3.SuspendLayout();
             panel4.SuspendLayout();
             panel2.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -55,6 +58,7 @@
             flowLayoutPanel1.Controls.Add(panel3);
             flowLayoutPanel1.Controls.Add(panel4);
             flowLayoutPanel1.Controls.Add(panel2);
+            flowLayoutPanel1.Controls.Add(panel6);
             flowLayoutPanel1.Dock = DockStyle.Left;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -153,6 +157,28 @@
             btnAdmin.TabIndex = 0;
             btnAdmin.Text = "Admin";
             btnAdmin.UseVisualStyleBackColor = false;
+            btnAdmin.Click += btnAdmin_Click;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(btnLogout);
+            panel6.Location = new Point(3, 400);
+            panel6.Margin = new Padding(3, 185, 3, 3);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(185, 48);
+            panel6.TabIndex = 0;
+            // 
+            // btnLogout
+            // 
+            btnLogout.BackColor = Color.FromArgb(44, 88, 108);
+            btnLogout.ForeColor = SystemColors.ControlLight;
+            btnLogout.Location = new Point(-42, -31);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(262, 100);
+            btnLogout.TabIndex = 0;
+            btnLogout.Text = "Logout";
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panelForm
             // 
@@ -181,6 +207,7 @@
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel2.ResumeLayout(false);
+            panel6.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -197,5 +224,7 @@
         private Panel panel2;
         private Button btnAdmin;
         private Panel panelForm;
+        private Panel panel6;
+        private Button btnLogout;
     }
 }

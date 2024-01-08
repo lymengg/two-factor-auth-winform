@@ -137,6 +137,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(267, 27);
             txtPassword.TabIndex = 5;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // label4
             // 
